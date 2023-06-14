@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     minlength: 2,
     maxlength: 30,
-    default: 'User',
+    default: 'Username',
     required: true,
   },
   password: {
