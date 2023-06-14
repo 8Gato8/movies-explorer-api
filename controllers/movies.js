@@ -18,7 +18,7 @@ const getMovies = async (req, res, next) => {
 
 const deleteMovieById = async (req, res, next) => {
   try {
-    const movie = await Movie.findById(req.params.movieId);
+    const movie = await Movie.findById(req.params._id);
     if (!movie) {
       throw new NotFoundError('Фильм с указанным id не найден');
     }
@@ -26,7 +26,7 @@ const deleteMovieById = async (req, res, next) => {
     if (req.user._id !== `${movie.owner.toString()}`) {
       throw new AccessDeniedError('Недостаточно прав для выполнения операции');
     }
-    await Movie.findByIdAndRemove(req.params.id);
+    await Movie.findByIdAndRemove(req.params._id);
 
     res.send(movie);
   } catch (err) {
@@ -46,7 +46,8 @@ const createMovie = async (req, res, next) => {
     duration,
     year,
     description,
-    image, trailer,
+    image,
+    trailerLink,
     nameRU,
     nameEN,
     thumbnail,
@@ -62,10 +63,11 @@ const createMovie = async (req, res, next) => {
         year,
         description,
         image,
-        trailer,
+        trailerLink,
         nameRU,
         nameEN,
         thumbnail,
+        owner: req.user._id,
         movieId,
       },
     );

@@ -2,11 +2,11 @@ const userRouter = require('express').Router();
 const updateProfileValidator = require('../middlewares/validators/userValidators/updateProfileValidator');
 
 const {
-  getCurrentUserInfo,
+  getUserInfo,
   updateProfile,
 } = require('../controllers/users');
 
-userRouter.get('/me', getCurrentUserInfo);
+userRouter.get('/me', getUserInfo);
 userRouter.patch('/me', updateProfileValidator(), updateProfile);
 
 module.exports = userRouter;
