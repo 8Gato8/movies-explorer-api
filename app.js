@@ -23,9 +23,9 @@ app.use(limiter);
 
 app.use(cors());
 
-app.use('*', nonexistentPathErrorHandler);
-
 app.use('/', router);
+
+app.use('*', nonexistentPathErrorHandler);
 
 app.use(errorLogger);
 

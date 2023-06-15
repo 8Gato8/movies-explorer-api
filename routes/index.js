@@ -11,9 +11,7 @@ const movieRouter = require('./movies');
 router.post('/signin', loginValidator(), login);
 router.post('/signup', createUserValidator(), createUser);
 
-router.use(auth);
-
-router.use('/users', userRouter);
-router.use('/movies', movieRouter);
+router.use('/users', auth, userRouter);
+router.use('/movies', auth, movieRouter);
 
 module.exports = router;
