@@ -1,0 +1,9 @@
+const CREATED_CODE = 201;
+const CONFLICT = 409;
+const BAD_REQUEST_CODE = 400;
+
+module.exports = {
+  CREATED_CODE,
+  CONFLICT,
+  BAD_REQUEST_CODE,
+};
