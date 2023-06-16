@@ -8,12 +8,13 @@ const limiter = require('./middlewares/limiter');
 const router = require('./routes/index');
 const generalErrorHandler = require('./middlewares/generalErrorHandler');
 const nonexistentPathErrorHandler = require('./middlewares/nonexistentPathErrorHandler');
+const dbAdress = require('./utils/dbConfig');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, DATA_BASE_ADRESS = dbAdress } = process.env;
 
 const app = express();
 
-mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb');
+mongoose.connect(`${DATA_BASE_ADRESS}`);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
-const AuthorizationError = require('../errorClasses/AuthorizationError');
+const { AuthorizationError, authorizationErrorIncorrectInputMessage } = require('../utils/errors/AuthorizationError');
 
 const { requiredEmailSetting } = require('../utils/validationSettings');
 
@@ -23,13 +23,13 @@ userSchema.statics.findUserByCredentials = async function (email, password) {
   const user = await this.findOne({ email }).select('+password');
 
   if (!user) {
-    throw new AuthorizationError('Неправильные почта или пароль');
+    throw new AuthorizationError(authorizationErrorIncorrectInputMessage);
   }
 
   const isMatched = await bcrypt.compare(password, user.password);
 
   if (!isMatched) {
-    throw new AuthorizationError('Неправильные почта или пароль');
+    throw new AuthorizationError(authorizationErrorIncorrectInputMessage);
   }
 
   return user;

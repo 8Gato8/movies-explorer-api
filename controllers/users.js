@@ -1,19 +1,19 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const NotFoundError = require('../errorClasses/NotFoundError');
-const BadRequestError = require('../errorClasses/BadRequestError');
-const ConflictError = require('../errorClasses/ConflictError');
+const { NotFoundError, notFoundUserErrorMessage } = require('../utils/errors/NotFoundError');
+const { BadRequestError, badRequestUserIncorrectInputMessage } = require('../utils/errors/BadRequestError');
+const { ConflictError, conflictErrorMessage } = require('../utils/errors/ConflictError');
 const updateUserData = require('../middlewares/updateUserData');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
-const { CREATED_CODE } = require('../httpStatusCodes/httpStatusCodes');
+const { CREATED_CODE } = require('../utils/httpStatusCodes/httpStatusCodes');
 
 const getUserInfo = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
     if (!user) {
-      throw new NotFoundError('Пользователь с указанным id не найден');
+      throw new NotFoundError(notFoundUserErrorMessage);
     }
     res.send(user);
   } catch (err) {
@@ -45,10 +45,10 @@ const createUser = async (req, res, next) => {
     });
   } catch (err) {
     if (err.name === 'ValidationError') {
-      next(new BadRequestError('Переданы некорректные данные пользователя'));
+      next(new BadRequestError(badRequestUserIncorrectInputMessage));
     }
     if (err.code === 11000) {
-      next(new ConflictError('Пользователь с таким email уже существует'));
+      next(new ConflictError(conflictErrorMessage));
     }
     next(err);
   }

@@ -1,5 +1,5 @@
-const BadRequestError = require('../errorClasses/BadRequestError');
-const NotFoundError = require('../errorClasses/NotFoundError');
+const { BadRequestError, badRequestGeneralIncorrectInputMessage } = require('../utils/errors/BadRequestError');
+const { NotFoundError, notFoundUserErrorMessage } = require('../utils/errors/NotFoundError');
 const User = require('../models/user');
 
 module.exports = async (req, res, next) => {
@@ -15,13 +15,13 @@ module.exports = async (req, res, next) => {
       },
     );
     if (!user) {
-      throw new NotFoundError('Пользователь с указанным id не найден');
+      throw new NotFoundError(notFoundUserErrorMessage);
     }
 
     res.send(user);
   } catch (err) {
     if (err.name === 'ValidationName') {
-      next(new BadRequestError('Переданы неккоректные данные'));
+      next(new BadRequestError(badRequestGeneralIncorrectInputMessage));
     }
     next(err);
   }

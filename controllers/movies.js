@@ -1,11 +1,16 @@
 const Movie = require('../models/movie');
-const NotFoundError = require('../errorClasses/NotFoundError');
-const AccessDeniedError = require('../errorClasses/AccessDeniedError');
+const { NotFoundError, notFoundMovieErrorMessage } = require('../utils/errors/NotFoundError');
+const { AccessDeniedError, accessDeniedErrorMessage } = require('../utils/errors/AccessDeniedError');
 
 const {
   CREATED_CODE,
-} = require('../httpStatusCodes/httpStatusCodes');
-const BadRequestError = require('../errorClasses/BadRequestError');
+} = require('../utils/httpStatusCodes/httpStatusCodes');
+
+const {
+  BadRequestError,
+  badRequestMovieNotFoundMessage,
+  badRequestMovieIncorrectInputMessage,
+} = require('../utils/errors/BadRequestError');
 
 const getMovies = async (req, res, next) => {
   try {
@@ -20,18 +25,18 @@ const deleteMovieById = async (req, res, next) => {
   try {
     const movie = await Movie.findById(req.params._id);
     if (!movie) {
-      throw new NotFoundError('Фильм с указанным id не найден');
+      throw new NotFoundError(notFoundMovieErrorMessage);
     }
 
     if (req.user._id !== `${movie.owner.toString()}`) {
-      throw new AccessDeniedError('Недостаточно прав для выполнения операции');
+      throw new AccessDeniedError(accessDeniedErrorMessage);
     }
     await Movie.findByIdAndRemove(req.params._id);
 
     res.send(movie);
   } catch (err) {
     if (err.name === 'CastError') {
-      next(new BadRequestError('Указан неккоректный id фильма'));
+      next(new BadRequestError(badRequestMovieNotFoundMessage));
       return;
     }
 
@@ -75,7 +80,7 @@ const createMovie = async (req, res, next) => {
     res.status(CREATED_CODE).send(movie);
   } catch (err) {
     if (err.name === 'ValidationError') {
-      next(new BadRequestError('Переданы некорректные данные фильма'));
+      next(new BadRequestError(badRequestMovieIncorrectInputMessage));
       return;
     }
     next(err);
