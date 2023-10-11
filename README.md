@@ -1,4 +1,4 @@
-#  movies-explorer (backend)
+# movies-explorer (backend)
 
 Backend-часть приложения, в котором можно найти фильмы по запросу и сохранить в личном кабинете.
 
