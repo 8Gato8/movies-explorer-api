@@ -30,7 +30,8 @@ Backend-часть приложения, в котором можно найти
 `npm run deploy` — запускает deploy в production при наличии ssh ключа
 
 ## Ссылки
-Адрес домена можно посмотреть по [ссылке](https://gato.diploma.nomoredomains.rocks)<br/>
+Адрес домена для frontend - [ссылка](https://gato.nomoredomains.rocks/)</br>
+Адрес домена для backend - [ссылка](https://gato.diploma.nomoredomains.rocks/)</br>
 Код frontend можно посмотреть по [ссылке](https://github.com/8Gato8/movies-explorer-frontend)
 
 ## Статус проекта и планы по доработке
