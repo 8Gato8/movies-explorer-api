@@ -27,9 +27,6 @@ Backend-часть приложения, в котором можно найти
 
 `npm run dev` — запускает сервер с hot-reload
 
-**Деплой проекта**
-`npm run deploy` — запускает deploy в production при наличии ssh ключа
-
 ## Ссылки
 Адрес домена для frontend - [ссылка](https://gato.nomoredomains.rocks/)</br>
 Адрес домена для backend - [ссылка](https://gato.diploma.nomoredomains.rocks/)</br>
