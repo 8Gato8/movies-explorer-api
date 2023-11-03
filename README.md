@@ -18,7 +18,7 @@ Backend-часть приложения, в котором можно найти
 - MongoDB
 - Mongoose
 - ESLint
-- Clebrate & Joi
+- Clebrate и Joi
 - Winston - логирование ошибок и запросов
 
 ## Как запустить проект локально
